@@ -21,18 +21,27 @@
 	<div class="message">
 		<h2>How many rows ?</h2>
 		<ul>
-			<li><button class="four" value="4">4*4</button></li>
-			<li><button class="six" value="6">6*6</button></li>
-			<li><button class="eight" value="8">8*8</button></li>
-			<li><button class="ten" value="10">10*10</button></li>
-			<li><button class="twelve" value="12">12*12</button></li>
+			<li><button class="four" value="4">4 x 4</button></li>
+			<li><button class="six" value="6">6 x 6</button></li>
+			<li><button class="eight" value="8">8 x 8</button></li>
+			<li><button class="ten" value="10">10 x 10</button></li>
+			<li><button class="twelve" value="12">12 x 12</button></li>
 		</ul>
 	</div>
 
 	<div id="game"></div>
+	
+	<div class="name">
+	<form>
+		<label for="iname">Player name: </label>
+		</br>
+		<input type="text" id="iname" name="iname">
+	</form>
+	<button class="reset" onClick="history.go(0)" value="Refresh">Game reset</button>
+	</div>
 
 	<footer class="footer">
-		<p>2017 - MIT EECS</p>
+		<p>2017 - MIT EECS - CSAIL - HCIE - v1.0</p>
 	</footer>
 
 	<script src="assets/js/vendor/jquery.min.js"></script>

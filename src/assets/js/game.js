@@ -12,6 +12,7 @@ var Game = function()
 		this.size = this.originalSize * this.originalSize;
 		this.caseHeight = base.height() / this.originalSize;
 		this.level = [];
+		// type of gems should related to number of gems in game.css
 		this.typesOfGems = 5;
 		this.fillEnd = true;
 		this.switchEnd = true;
@@ -87,10 +88,10 @@ var Game = function()
 		}
 	};
 
+	// Gems swipper handle
 	this.swipeGems = function(a, aID, b, bID) 
 	{
 		//console.log("switch: ", aID, bID);
-
 		if (this.switchEnd && a !== undefined && b !== undefined && aID >= 0 && bID >= 0 && aID <= this.size && bID <= this.size) 
 		{
 			var that = this;
@@ -109,9 +110,7 @@ var Game = function()
 			this.comboUpdate(0);
 
 			//console.log("a&b types: ", bType, aType);
-
 			a.attr('data-id', bID).animate({top: bTop,	left: bLeft}, 250);
-
 			b.attr('data-id', aID).animate({top: aTop,	left: aLeft}, 250, function() 
 																			{
 																				that.switchEnd = true;
@@ -243,15 +242,20 @@ var Game = function()
 
 		this.base.find('.row[data-id='+position+']')
 		.attr('data-id', false)
-		.addClass('glow').animate({
+		.addClass('glow').animate(
+		{
 			marginTop: difference,
 			marginLeft: difference,
 			height: 0,
 			width: 0
-		}, 500, function() {
-			$(this).remove();
-			that.scoreUpdate(100);
-		});
+		}, 
+		500, 
+		function() 
+			{
+				$(this).remove();
+				that.scoreUpdate(100);
+			}
+		);
 
 		if (that.fillEnd) {
 			that.comboUpdate(1);
@@ -275,16 +279,17 @@ var Game = function()
 		}
 	};
 
+	// Setup a new random gems
 	this.createNewRandomGem = function(colPosition) 
 	{
 		// console.log("createNewRandomGem", colPosition);
-
 		var that = this;
 		var gem = $(document.createElement('div'));
 
 		this.level[colPosition] = Math.round(Math.random() * this.typesOfGems + 1);
 
-		gem.addClass('type-' + this.level[colPosition] +' row').css({
+		gem.addClass('type-' + this.level[colPosition] +' row').css(
+		{
 			top: -this.caseHeight,
 			left: colPosition * this.caseHeight,
 			height: this.caseHeight,
@@ -296,7 +301,8 @@ var Game = function()
 
 		gem.appendTo(this.base);
 
-		gem.animate({
+		gem.animate(
+		{
 			top: 0,
 			opacity: 1
 		},200);
@@ -304,10 +310,10 @@ var Game = function()
 		this.bindDraggableEvent();
 	};
 
+	// And we fill the hole after some remove out ...
 	this.fillHoles = function()
 	{
 		// console.log("fillHoles");
-
 		var i;
 		var counter = 0;
 
@@ -315,39 +321,47 @@ var Game = function()
 
 		this.fillEnd = false;
 
-		for (i = 0; i < this.level.length; i++) {
-
+		for (i = 0; i < this.level.length; i++) 
+		{
 			var under = i + this.originalSize;
 			var lignePosition = Math.floor(under / this.originalSize);
 			var colPosition = under - Math.floor(lignePosition * this.originalSize);
 			
-			if (this.level[under] === 0 && this.level[i] !== 0) {
+			if (this.level[under] === 0 && this.level[i] !== 0) 
+			{
 
-				if (this.level[under] === 0 && this.level[under] !== undefined) {
+				if (this.level[under] === 0 && this.level[under] !== undefined) 
+				{
 					this.moveGems(i, lignePosition, colPosition, under);
 				}
 
 				break;
 			
-			} else if (this.level[i] === 0) {
+			} 
+			else if (this.level[i] === 0) 
+			{
 				this.createNewRandomGem(colPosition);
-			} else if (this.level[i] !== 0) {
+			} 
+			else if (this.level[i] !== 0) 
+			{
 				counter++;
 			}
 		}
 
 		//console.log(this.level.length, counter);
-
-		if (this.level.length === counter) {
+		if (this.level.length === counter) 
+		{
 			//console.log('no hole left');
 			this.fillEnd = true;
 			return setTimeout($.proxy(this.checkLines, this), 50);
-		} else {
+		} 
+		else 
+		{
 			return setTimeout($.proxy(this.fillHoles, this), 50);
 		}
 	};
 
-
+	// Update Score
 	this.scoreUpdate = function(score)
 	{
 		this.score = Math.floor(this.score + score / 3, 10);
@@ -358,15 +372,19 @@ var Game = function()
 	this.comboUpdate = function(combo)
 	{
 
-		if (combo > 0) {
+		if (combo > 0) 
+		{
 			this.combo = this.combo + combo;
 			this.ui.find('.combo').text(this.combo);
-		} else {
+		} 
+		else 
+		{
 			this.combo = 0;
 		}
 	};
 };
 
+// Handle click event
 $(document).ready(function() 
 {
 	var $game = $('#game');
