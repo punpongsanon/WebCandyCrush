@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>6.813 - CandyCrush</title>
+	<link rel="stylesheet" href="assets/css/ui.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="assets/css/game.css" type="text/css" media="screen">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="6.813 - CandyCrush with Javascript, html/css, Jquery & HammerJS.">
+	<meta name="author" content="MIT EECS">
+</head>
+<body>
+
+	<div class="ui" id="ui">
+		<h1>CandyCrush</h1>
+		</br>
+		<p id="score">Score: <span class="score">0</span></p>
+		<p id="combo">Combo: <span class="combo">0</span></p>
+	</div>
+
+	<div class="message">
+		<h2>How many rows ?</h2>
+		<ul>
+			<li><button class="four" value="4">4*4</button></li>
+			<li><button class="six" value="6">6*6</button></li>
+			<li><button class="eight" value="8">8*8</button></li>
+			<li><button class="ten" value="10">10*10</button></li>
+			<li><button class="twelve" value="12">12*12</button></li>
+		</ul>
+	</div>
+
+	<div id="game"></div>
+
+	<footer class="footer">
+		<p>2017 - MIT EECS</p>
+	</footer>
+
+	<script src="assets/js/vendor/jquery.min.js"></script>
+	<!-- Hammer helps to add support for touch gestures -->
+	<script src="assets/js/vendor/hammer.js"></script>
+	<script src="assets/js/vendor/jquery.hammer.min.js"></script>
+	<script src="assets/js/game.js"></script>
+</body>
+</html>
