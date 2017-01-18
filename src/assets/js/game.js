@@ -39,28 +39,30 @@ var Game = function()
 		}
 	};
 
+	// Handle the draging event (using hammer.js plug-ins)
 	this.bindDraggableEvent = function() 
 	{
 		var that = this;
 		var position;
 
-		this.base.hammer().on('dragleft dragright dragup dragdown', '.row', function(event) {
-			
+		this.base.hammer().on('dragleft dragright dragup dragdown', '.row', function(event) 
+		{
 			//console.log('swipe', this, event);
-
 			event.gesture.preventDefault();
 
 			position = +$(this).attr('data-id');
 			
-			if (position !== undefined) {
-				that.testMove(position, event.type);
+			if (position !== undefined) 
+			{
+				that.gestureMove(position, event.type);
 				event.gesture.stopDetect();
 				return;
 			}
 		});
 	};
 
-	this.testMove = function(position, direction) 
+	// Handle the move event (depend on how the hammer detect the drag event)
+	this.gestureMove = function(position, direction) 
 	{
 		switch(direction) 
 		{
@@ -74,16 +76,25 @@ var Game = function()
 			case "dragright":
 				if (position % this.originalSize !== this.originalSize - 1) 
 				{
-					this.swipeGems(this.base.find('.row[data-id='+position+']'), position, this.base.find('.row[data-id='+(position + 1)+']'), position + 1);
+					this.swipeGems(this.base.find('.row[data-id='+position+']'), 
+												  position, 
+												  this.base.find('.row[data-id='+(position + 1)+']'), 
+												  position + 1);
 				}
 			break;
 
 			case "dragup":
-				this.swipeGems(this.base.find('.row[data-id='+position+']'), position, this.base.find('.row[data-id='+(position - this.originalSize)+']'), position - this.originalSize);
+				this.swipeGems(this.base.find('.row[data-id='+position+']'), 
+							   position, 
+							   this.base.find('.row[data-id='+(position - this.originalSize)+']'), 
+							   position - this.originalSize);
 			break;
 
 			case "dragdown":
-				this.swipeGems(this.base.find('.row[data-id='+position+']'), position, this.base.find('.row[data-id='+(position + this.originalSize)+']'), position + this.originalSize);
+				this.swipeGems(this.base.find('.row[data-id='+position+']'), 
+							   position, 
+							   this.base.find('.row[data-id='+(position + this.originalSize)+']'), 
+							   position + this.originalSize);
 			break;
 		}
 	};
@@ -92,7 +103,13 @@ var Game = function()
 	this.swipeGems = function(a, aID, b, bID) 
 	{
 		//console.log("switch: ", aID, bID);
-		if (this.switchEnd && a !== undefined && b !== undefined && aID >= 0 && bID >= 0 && aID <= this.size && bID <= this.size) 
+		if (this.switchEnd && 
+			a !== undefined && 
+			b !== undefined && 
+			aID >= 0 && 
+			bID >= 0 && 
+			aID <= this.size && 
+			bID <= this.size) 
 		{
 			var that = this;
 			var aTop = a.css('top');
